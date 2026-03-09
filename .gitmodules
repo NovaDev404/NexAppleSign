@@ -4,3 +4,6 @@
 [submodule "Dependencies/OpenSSL"]
 	path = Dependencies/OpenSSL
 	url = https://github.com/krzyzanowskim/OpenSSL
+[submodule "AltSign"]
+	path = AltSign
+	url = https://github.com/NovaDev404/NexAppleSign.git
