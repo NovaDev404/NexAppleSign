@@ -84,10 +84,16 @@ let package = Package(
             ],
             publicHeadersPath: "",
             cSettings: [
-                // header search paths are relative to path: "Dependencies/ldid"
-                .headerSearchPath("libplist/include"),            // for plist/Node.h
-                .headerSearchPath("libplist/include/plist"),      // extra-safety for plist includes
-                .headerSearchPath("libplist/libcnary/include"),  // this is where node.h lives
+                .headerSearchPath("libplist/include"),
+                .headerSearchPath("libplist/include/plist"),
+                .headerSearchPath("libplist/libcnary/include"),
+    
+                // FORCE the include so clang sees node.h
+                .unsafeFlags([
+                    "-IDependencies/ldid/libplist/libcnary/include",
+                    "-IDependencies/ldid/libplist/include",
+                    "-IDependencies/ldid/libplist/include/plist"
+                ]),
                 .unsafeFlags(["-w"])
             ],
             cxxSettings: [
