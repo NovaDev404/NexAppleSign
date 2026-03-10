@@ -37,62 +37,63 @@ let package = Package(
 		),
 
 		
-		.target(
-			name: "ldid-core",
-			path: "Dependencies/ldid",
-			exclude: [
-				"ldid.hpp",
-				"ldid.cpp",
-				"version.sh",
-				"COPYING",
-				"control.sh",
-				"control",
-				"ios.sh",
-				"make.sh",
-				"deb.sh",
-				"plist.sh",
+        .target(
+            name: "ldid-core",
+            path: "Dependencies/ldid",
+            exclude: [
+                "ldid.hpp",
+                "ldid.cpp",
+                "version.sh",
+                "COPYING",
+                "control.sh",
+                "control",
+                "ios.sh",
+                "make.sh",
+                "deb.sh",
+                "plist.sh",
 
-				// if lib plist is included as dependency, then no need for source
-				"libplist/include",
-				"libplist/include/Makefile.am",
-				"libplist/fuzz",
-				"libplist/cython",
-				"libplist/m4",
-				"libplist/test",
-				"libplist/tools",
-				"libplist/AUTHORS",
-				"libplist/autogen.sh",
-				"libplist/configure.ac",
-				"libplist/COPYING",
-				"libplist/COPYING.LESSER",
-				"libplist/doxygen.cfg.in",
-				"libplist/Makefile.am",
-				"libplist/NEWS",
-				"libplist/README.md",
-				"libplist/src/Makefile.am",
-				"libplist/src/libplist++.pc.in",
-				"libplist/src/libplist.pc.in",
-				"libplist/libcnary/cnary.c",
-				"libplist/libcnary/COPYING",
-				"libplist/libcnary/Makefile.am",
-				"libplist/libcnary/README"
-			],
-			sources: [
-				"lookup2.c",
-				"libplist/src",
-				"libplist/libcnary"
-			],
-			publicHeadersPath: "",
-			cSettings: [
-				.headerSearchPath("libplist/include"),
-				.headerSearchPath("libplist/src"),
-				.headerSearchPath("libplist/libcnary/include"),
-				.unsafeFlags(["-w"])
-			],
-			cxxSettings: [
-				.unsafeFlags(["-w"])
-			]
-		),
+                // if lib plist is included as dependency, then no need for source
+                "libplist/include",
+                "libplist/include/Makefile.am",
+                "libplist/fuzz",
+                "libplist/cython",
+                "libplist/m4",
+                "libplist/test",
+                "libplist/tools",
+                "libplist/AUTHORS",
+                "libplist/autogen.sh",
+                "libplist/configure.ac",
+                "libplist/COPYING",
+                "libplist/COPYING.LESSER",
+                "libplist/doxygen.cfg.in",
+                "libplist/Makefile.am",
+                "libplist/NEWS",
+                "libplist/README.md",
+                "libplist/src/Makefile.am",
+                "libplist/src/libplist++.pc.in",
+                "libplist/src/libplist.pc.in",
+                "libplist/libcnary/cnary.c",
+                "libplist/libcnary/COPYING",
+                "libplist/libcnary/Makefile.am",
+                "libplist/libcnary/README"
+            ],
+            sources: [
+                "lookup2.c",
+                "libplist/src",
+                "libplist/libcnary"
+            ],
+            publicHeadersPath: "",
+            cSettings: [
+                // header search paths are relative to path: "Dependencies/ldid"
+                .headerSearchPath("libplist/include"),            // for plist/Node.h
+                .headerSearchPath("libplist/include/plist"),      // extra-safety for plist includes
+                .headerSearchPath("libplist/libcnary/include"),  // this is where node.h lives
+                .unsafeFlags(["-w"])
+            ],
+            cxxSettings: [
+                .unsafeFlags(["-w"])
+            ]
+        ),
 
         .target(
             name: "ldid",
@@ -106,10 +107,10 @@ let package = Package(
             ],
             publicHeadersPath: "",
             cSettings: [
-                // from AltSign/ldid -> go up two levels to package root then to Dependencies/ldid/...
+                // relative to AltSign/ldid -> points back up to NexAppleSign/Dependencies/ldid/...
                 .headerSearchPath("../../Dependencies/ldid"),
                 .headerSearchPath("../../Dependencies/ldid/libplist/include"),
-                .headerSearchPath("../../Dependencies/ldid/libplist/src"),
+                .headerSearchPath("../../Dependencies/ldid/libplist/include/plist"),
                 .headerSearchPath("../../Dependencies/ldid/libplist/libcnary/include"),
             ],
             cxxSettings: [
