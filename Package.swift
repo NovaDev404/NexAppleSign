@@ -94,28 +94,29 @@ let package = Package(
 			]
 		),
 
-		.target(
-			name: "ldid",
-			dependencies: ["ldid-core"],
-			path: "AltSign/ldid",
-			exclude: [
-				"alt_ldid.hpp"
-			],
-			sources: [
-				"alt_ldid.cpp"
-			],
-			publicHeadersPath: "",
-			cSettings: [
-				.headerSearchPath("../../Dependencies/ldid"),
-				.headerSearchPath("../../Dependencies/ldid/libplist/include"),
-				.headerSearchPath("../../Dependencies/ldid/libplist/src"),
-				.headerSearchPath("../../Dependencies/ldid/libplist/libcnary/include"),
-			],
-			cxxSettings: [
-				.unsafeFlags(["-w"])
-			]
-		),
-
+        .target(
+            name: "ldid",
+            dependencies: ["ldid-core"],
+            path: "AltSign/ldid",
+            exclude: [
+                "alt_ldid.hpp"
+            ],
+            sources: [
+                "alt_ldid.cpp"
+            ],
+            publicHeadersPath: "",
+            cSettings: [
+                // from AltSign/ldid -> go up two levels to package root then to Dependencies/ldid/...
+                .headerSearchPath("../../Dependencies/ldid"),
+                .headerSearchPath("../../Dependencies/ldid/libplist/include"),
+                .headerSearchPath("../../Dependencies/ldid/libplist/src"),
+                .headerSearchPath("../../Dependencies/ldid/libplist/libcnary/include"),
+            ],
+            cxxSettings: [
+                .unsafeFlags(["-w"])
+            ]
+        ),
+        
 		.target(
 			name: "CCoreCrypto",
 			path: "Dependencies/corecrypto",
